@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Pet from "./Pet";
 import useBreedList from "./useBreedList";
 import js from "@eslint/js";
+import Results from "./Results";
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams = () => {
-  const [location, setLocation] = useState("");
+  // const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
   const [pets, setPets] = useState([]);
@@ -17,7 +18,7 @@ const SearchParams = () => {
 
   async function requestPets() {
     const res = await fetch(
-      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&&breed=${breed}`
     );
     const json = await res.json();
 
@@ -32,7 +33,7 @@ const SearchParams = () => {
           requestPets();
         }}
       >
-        <label htmlFor="location">
+        {/* <label htmlFor="location">
           Location
           <input
             id="location"
@@ -40,7 +41,7 @@ const SearchParams = () => {
             placeholder="Location"
             onChange={(e) => setLocation(e.target.value)}
           />
-        </label>
+        </label> */}
 
         <label htmlFor="animal">
           Animal
@@ -87,14 +88,7 @@ const SearchParams = () => {
         <button>Submit</button>
       </form>
 
-      {pets.map((pet) => (
-        <Pet
-          name={pet.name}
-          breed={pet.breed}
-          animal={pet.animal}
-          key={pet.id}
-        />
-      ))}
+      <Results pets={pets} />
     </div>
   );
 };
